@@ -152,11 +152,17 @@ Ironhack – Data Analytics Bootcamp
 
 ---
 
-## Data Ingestion Status
+## Step 1 - Data Ingestion Status
 
 - Wine Quality dataset (`WineQT.csv`) loaded as technical quality source
 - Wine Reviews dataset (`winemag-data-130k-v2.csv`) loaded as market perception source
 - Raw data stored in `data/raw/` and treated as immutable
 - Initial sanity checks completed prior to cleaning
 
+## Step 2 — Wine Quality EDA (Technical Quality)
+
+- Confirmed target distribution and class concentration around mid-quality scores
+- Checked missing values and duplicates
+- Screened correlations between physicochemical features and quality to guide modeling
+- Documented initial observations prior to any cleaning or feature engineering
 
