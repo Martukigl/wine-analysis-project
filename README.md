@@ -165,7 +165,7 @@ Ironhack – Data Analytics Bootcamp
 - Checked missing values and duplicates
 - Screened correlations between physicochemical features and quality to guide modeling
 - Documented initial observations prior to any cleaning or feature engineering
-  
+
 ## Step 3 — Wine Reviews Ingestion & Initial Exploration (Market Perception)
 
 - Wine Reviews dataset loaded as market perception source
@@ -173,24 +173,52 @@ Ironhack – Data Analytics Bootcamp
 - Missing values identified across price and regional fields
 - Distribution ranges reviewed to assess modeling feasibility
 
+## Step 3B — Wine Reviews EDA & Modeling Decisions (Market Perception)
+
+- Confirmed `points` as a stable and complete target variable for market expectation
+- Explored the relationship between price and ratings to assess signal strength
+- Identified strong skewness and missing values in price distribution
+- Defined two market expectation models: with and without price (log-transformed)
+- Removed highly sparse regional fields (`region_1`, `region_2`) to reduce noise and improve interpretability
+
 ## Step 4 — Technical Quality Modeling (Machine Learning)
 
-- Framed technical quality prediction as a supervised regression problem
+- Framed technical quality prediction as a supervised regression problem (target: `quality`)
 - Trained baseline Linear and Ridge regression models
 - Evaluated performance using RMSE and R²
 - Identified key chemical drivers of technical wine quality
 - Established an interpretable technical benchmark for strategic comparison
 
+## Step 4B — Model Validation & Advanced ML (Technical Quality)
+
+- Performed cross-validation to assess model stability beyond a single train-test split
+- Compared Linear, Ridge, and Lasso regression to evaluate coefficient stability and feature selection
+- Benchmarked performance with a non-linear Random Forest model
+- Compared linear coefficients vs Random Forest feature importance to validate robustness of key drivers
+- Addressed scaling effects (e.g., `density`) using standardized coefficients for fair comparison
+- Added sensitivity analysis to quantify the impact of key variables (e.g., alcohol) on predicted quality
+
 ## Step 5 — Market Expectation Modeling (Machine Learning)
 
-- Framed market perception prediction as a supervised regression problem
-- Developed two models to estimate expected ratings, with and without price
-- Quantified the influence of price on perceived quality
-- Established a market expectation benchmark for risk analysis
+- Framed market perception prediction as a supervised regression problem (target: `points`)
+- Developed two models to estimate expected ratings:
+  - Model 2A: without price
+  - Model 2B: including log-transformed price
+- Quantified the influence of price on perceived quality through performance comparison
+- Established a market expectation benchmark to inform the risk framework
 
 ## Step 6 — Risk Score Framework
 
 - Defined business risk as misalignment between technical quality and market expectations
 - Built a continuous Risk Score (0–100) to quantify latent overvaluation risk
-- Refined risk segmentation into four actionable categories
-- Visualized risk distribution to support strategic decision-making
+- Refined segmentation into four actionable categories (Low, Medium, Medium–High, High)
+- Created clear visualizations to communicate risk distribution and segment size
+- Translated analytical outputs into proactive strategic guidance to mitigate delayed market impact
+
+## Modeling scope and limitations (Project design choice)
+
+- This project prioritizes interpretability and business actionability over maximum predictive performance
+- Advanced ML techniques are used to validate robustness (cross-validation), benchmark non-linear gains, and test feature stability
+- Complex approaches (e.g., deep learning, extensive NLP) are out of scope due to limited incremental strategic value within the project timeline
+- Results are interpreted as associations and predictive patterns within the datasets, not causal effects
+
