@@ -1,5 +1,8 @@
-input_data:
-  file: "../data/raw/raw_data_file.csv"
+paths:
+  raw_data: data/raw
+  processed_data: data/processed
 
-output_data:
-  file: "../data/clean/cleaned_data_file.csv"
+files:
+  wine_quality: WineQT.csv
+  wine_reviews: winemag-data-130k-v2.csv
+
