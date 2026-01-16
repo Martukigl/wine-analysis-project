@@ -165,4 +165,12 @@ Ironhack – Data Analytics Bootcamp
 - Checked missing values and duplicates
 - Screened correlations between physicochemical features and quality to guide modeling
 - Documented initial observations prior to any cleaning or feature engineering
+  
+## Step 3 — Wine Reviews Ingestion & Initial Exploration (Market Perception)
+
+- Wine Reviews dataset loaded as market perception source
+- Initial inspection of ratings (`points`), prices, and key categorical variables
+- Missing values identified across price and regional fields
+- Distribution ranges reviewed to assess modeling feasibility
+
 
