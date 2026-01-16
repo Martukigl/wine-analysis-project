@@ -150,3 +150,13 @@ Ironhack – Data Analytics Bootcamp
 - Methodology updated to **ML + risk segmentation architecture**
 - Deliverables aligned with **Case Study 1 (Data Science)**
 
+---
+
+## Data Ingestion Status
+
+- Wine Quality dataset (`WineQT.csv`) loaded as technical quality source
+- Wine Reviews dataset (`winemag-data-130k-v2.csv`) loaded as market perception source
+- Raw data stored in `data/raw/` and treated as immutable
+- Initial sanity checks completed prior to cleaning
+
+
