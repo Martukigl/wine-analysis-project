@@ -173,4 +173,11 @@ Ironhack – Data Analytics Bootcamp
 - Missing values identified across price and regional fields
 - Distribution ranges reviewed to assess modeling feasibility
 
+## Step 4 — Technical Quality Modeling (Machine Learning)
+
+- Framed technical quality prediction as a supervised regression problem
+- Trained baseline Linear and Ridge regression models
+- Evaluated performance using RMSE and R²
+- Identified key chemical drivers of technical wine quality
+- Established an interpretable technical benchmark for strategic comparison
 
