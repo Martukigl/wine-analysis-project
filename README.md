@@ -181,3 +181,9 @@ Ironhack – Data Analytics Bootcamp
 - Identified key chemical drivers of technical wine quality
 - Established an interpretable technical benchmark for strategic comparison
 
+## Step 5 — Market Expectation Modeling (Machine Learning)
+
+- Framed market perception prediction as a supervised regression problem
+- Developed two models to estimate expected ratings, with and without price
+- Quantified the influence of price on perceived quality
+- Established a market expectation benchmark for risk analysis
