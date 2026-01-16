@@ -192,5 +192,5 @@ Ironhack – Data Analytics Bootcamp
 
 - Defined business risk as misalignment between technical quality and market expectations
 - Built a continuous Risk Score (0–100) to quantify latent overvaluation risk
-- Segmented wines into Low, Medium, and High risk categories
-- Translated analytical outputs into actionable strategic insights
+- Refined risk segmentation into four actionable categories
+- Visualized risk distribution to support strategic decision-making
