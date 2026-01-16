@@ -187,3 +187,10 @@ Ironhack – Data Analytics Bootcamp
 - Developed two models to estimate expected ratings, with and without price
 - Quantified the influence of price on perceived quality
 - Established a market expectation benchmark for risk analysis
+
+## Step 6 — Risk Score Framework
+
+- Defined business risk as misalignment between technical quality and market expectations
+- Built a continuous Risk Score (0–100) to quantify latent overvaluation risk
+- Segmented wines into Low, Medium, and High risk categories
+- Translated analytical outputs into actionable strategic insights
