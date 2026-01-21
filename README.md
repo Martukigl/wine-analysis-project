@@ -105,13 +105,14 @@ Final model uses the **full dataset**.
 
 ---
 
-## 📈 Model Evaluation Summary
+📈 Baseline Model Evaluation Summary
 
-- **Recall (risk):** ~0.75  
-- **ROC-AUC:** ~0.82  
-- **PR-AUC:** ~0.78  
+- **High Risk Recall:** ~0.75
+- **High Risk Precision:** ~0.72
+- **ROC-AUC:** ~0.82
+- **PR-AUC:** ~0.78
 
-Emphasis on **threshold-aware evaluation** over accuracy.
+Evaluation emphasizes recall for the high-risk class, in line with the asymmetric business cost of false negatives.
 
 ---
 
