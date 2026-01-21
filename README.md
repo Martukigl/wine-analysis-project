@@ -20,6 +20,19 @@
 
 ---
 
+## Table of Contents
+
+1. Project Overview  
+2. Data Description  
+3. Exploratory Data Analysis (Notebook 01)  
+4. Baseline Risk Model (Notebook 02)  
+5. Risk Framework & Evaluation Strategy (Notebook 03)  
+6. Risk Modeling & Threshold Optimization (Notebook 04)  
+7. Risk Calculator (Notebook 05)  
+8. Conclusions & Limitations  
+
+---
+
 ## 📌 Project Overview
 
 Wine production involves long decision cycles: blending, bottling, pricing, and positioning decisions are often made months or years before a wine reaches the market.
@@ -115,6 +128,31 @@ Final model uses the **full dataset**.
 Evaluation emphasizes recall for the high-risk class, in line with the asymmetric business cost of false negatives.
 
 ---
+## Risk Framework & Evaluation Strategy
+
+This project frames low technical wine quality as a **risk prevention problem**, not a pure prediction task.
+
+A wine is labeled as **High Risk** when `quality ≤ 5`, and **Low Risk** otherwise.  
+The model is designed as an **early warning system**, supporting conservative, preventive decisions before market release.
+
+### Business cost asymmetry
+
+- **False Negatives** (risky wines classified as safe) are considered more costly than **False Positives**.
+- As a result, the primary objective is to **minimize missed risk cases**, even at the expense of allowing more false alarms.
+
+### Evaluation strategy
+
+- **Recall for the High-Risk class (risk = 1)** is the primary evaluation metric.
+- Accuracy is not optimized, as it treats all errors equally and does not reflect the business objective.
+- **ROC-AUC** and **PR-AUC** are used as supporting metrics to compare models independently of a specific decision threshold.
+
+### Decision threshold
+
+- The default probability threshold of 0.5 is treated as a convention, not a business rule.
+- Threshold selection is considered part of the decision policy and is tuned in later stages to achieve a minimum target recall for high-risk wines.
+
+This framework is defined **before model optimization** and governs all subsequent modeling, threshold tuning, and risk calculator design.
+
 
 ## ⚠️ Scope and Limitations
 
