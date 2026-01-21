@@ -61,7 +61,6 @@ Minimize false negatives by detecting low-quality risk as early as possible, eve
 risk = 1 if quality ≤ 5
 risk = 0 if quality > 5
 
-
 - High-risk rate ≈ **45.7%**
 - Dataset is not severely imbalanced  
 - Framing reflects a preventive quality control perspective
@@ -72,12 +71,11 @@ risk = 0 if quality > 5
 
 EDA focused on understanding distributions and relationships between chemical attributes and quality.
 
-### EDA Enhancements
-- Spearman correlation to capture monotonic, non-linear relationships  
-- Alcohol range analysis:
-  - Wines >12.5% alcohol ≈ 4.5% of dataset  
-  - Clear pattern shift above this threshold  
-- Hypothesis later tested during modeling (not assumed)
+### EDA Highlights
+- Strong association between alcohol content and technical quality
+- Volatile acidity consistently aligns with low-quality outcomes
+- Some variables exhibit monotonic but non-linear relationships, motivating the use of both Pearson and Spearman correlation
+- Exploratory patterns motivated a hypothesis-driven experiment evaluated later during modeling, without assuming any decision at the EDA stage
 
 ---
 
@@ -94,8 +92,9 @@ EDA focused on understanding distributions and relationships between chemical at
 
 ## 🧪 Modeling Experiments
 
-### Alcohol Filtering Experiment (≤12.5%)
+### Alcohol-Based Filtering Experiment
 
+- Hypothesis-driven experiment motivated by exploratory patterns
 - Controlled experiment with identical pipeline and split  
 - Filtering reduced recall for high-risk wines  
 - Slight ROC-AUC decrease, no meaningful PR-AUC gain  
