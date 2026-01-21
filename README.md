@@ -1,224 +1,153 @@
-# 🍷 Strategic ML Framework for Wine Pricing Risk  
-### Data Science Final Project – Ironhack
+# 🍷 Wine Quality Risk Calculator
+
+**Data Science Final Project – Ironhack (Case Study 1)**
 
 ---
 
 ## 🛠️ Tools & Technologies
 
-<p align="left">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg" alt="Pandas" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg" alt="NumPy" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/matplotlib/matplotlib-original.svg" alt="Matplotlib" width="40" height="40"/>
-  <img src="https://seaborn.pydata.org/_static/logo-wide-lightbg.svg" alt="Seaborn" width="80" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/scikitlearn/scikitlearn-original.svg" alt="Scikit-learn" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" alt="Git" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" alt="GitHub" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/jupyter/jupyter-original.svg" alt="Jupyter Notebook" width="40" height="40"/>
+<p align="left"> 
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python" width="40" height="40"/> 
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg" alt="Pandas" width="40" height="40"/> 
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg" alt="NumPy" width="40" height="40"/> 
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/matplotlib/matplotlib-original.svg" alt="Matplotlib" width="40" height="40"/> 
+  <img src="https://seaborn.pydata.org/_static/logo-wide-lightbg.svg" alt="Seaborn" width="80" height="40"/> 
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/scikitlearn/scikitlearn-original.svg" alt="Scikit-learn" width="40" height="40"/> 
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" alt="Git" width="40" height="40"/> 
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" alt="GitHub" width="40" height="40"/> 
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/jupyter/jupyter-original.svg" alt="Jupyter Notebook" width="40" height="40"/> 
 </p>
 
 ---
 
 ## 📌 Project Overview
 
-The wine industry faces a **structural delay between decisions and consequences**.  
-Pricing and positioning choices made today often impact brand perception and sales **two to three years later**, when corrective action is limited or nearly irreversible.
+Wine production involves long decision cycles: blending, bottling, pricing, and positioning decisions are often made months or years before a wine reaches the market.
 
-At the same time, **climate change is increasing vintage-to-vintage variability** in grape composition, making technical wine quality less predictable and amplifying strategic risk.
+When a wine with low technical quality is released under normal or premium positioning, the negative impact is rarely immediate. Instead, consumer trust erodes gradually, making corrective action costly and delayed.
 
-This project develops an **interpretable, business-oriented Machine Learning framework** to help wineries **anticipate perception and pricing risk before negative market effects materialize**.
+This project develops an interpretable **Machine Learning risk classifier** that predicts whether a wine presents a **high risk of low technical quality**, based solely on its chemical composition.
 
-Rather than focusing only on explaining past outcomes, the objective is to **support preventive decision-making** for future wine releases, enabling wineries to adjust pricing and positioning strategies while preserving long-term consumer trust.
+The goal is not to explain quality after the fact, but to provide an **early warning tool** that supports preventive, conservative decision-making before market exposure.
 
 ---
 
 ## 🧠 Business Problem
 
-Wineries must decide **how to price and position a wine today** for a product that will reach the market years later, often under uncertain quality conditions.
+Wineries must decide whether a wine is safe to release and position normally, or whether it requires additional caution (price adjustment, blending revision, or repositioning).
 
-If a winery overprices a weaker vintage or maintains premium positioning when technical quality declines, the negative impact may not be immediate. Instead, **consumer trust erodes gradually**, and sales decline becomes visible only after several years.
+From a business perspective, errors are asymmetric:
 
-**Core strategic question:**
+- **False negatives** (high-risk wines classified as safe)  
+  → Potential long-term brand damage and loss of consumer trust
 
-> How can wineries detect early warning signals of misalignment between technical quality and market expectations, before long-term damage occurs?
+- **False positives** (safe wines flagged as risky)  
+  → Conservative decisions, but limited strategic downside
 
----
-
-## 📊 Data Description
-
-This project is based on two independent and complementary datasets:
-
-### 1️⃣ Wine Quality Dataset
-- Physicochemical attributes of wines
-- Represents **technical and analytical wine quality**
-- Includes acidity, alcohol, pH, sugar, sulphates, and expert quality scores
-
-### 2️⃣ Wine Reviews Dataset
-- Professional and consumer wine reviews
-- Represents **market perception**
-- Includes price, rating points, country, variety, and textual descriptions
-
-**Methodological note:**  
-The datasets are **not joined at a row level**.  
-They are analyzed separately and connected conceptually through **model outputs and scenario-based comparison**, reflecting real-world decision-making constraints.
+🎯 **Core business objective:**  
+Minimize false negatives by detecting low-quality risk as early as possible, even at the cost of some false positives.
 
 ---
 
-## 🔍 Machine Learning & Analytical Approach
+## 📊 Dataset Description
 
-This project follows a **multi-layer decision-support architecture**:
+### Wine Quality Dataset
+- Physicochemical attributes of wines  
+- Represents technical and analytical wine quality  
+- Features include acidity measures, alcohol content, pH, sugar, sulphates, and density  
+- Target variable: expert quality score (integer scale)
 
-### 🔹 Layer 1 – Technical Quality Model
-- Supervised regression models predict expected technical wine quality from chemical composition
-- Provides early signals of quality variation before market exposure
+### Risk Target Definition
+risk = 1 if quality ≤ 5
+risk = 0 if quality > 5
 
-### 🔹 Layer 2 – Market Expectation Model
-- Supervised regression models estimate expected market perception (ratings and/or price context)
-- Captures how the market typically evaluates wines with similar characteristics
 
-### 🔹 Layer 3 – Strategic Risk Segmentation
-- An explicit risk indicator combines:
-  - predicted technical quality
-  - expected market perception
-  - observed pricing signals
-- Wines are segmented into:
-  - **Low Risk**
-  - **Medium Risk**
-  - **High Risk**
-
-The objective is **risk mitigation and strategic alignment**, not maximizing predictive accuracy alone.
+- High-risk rate ≈ **45.7%**
+- Dataset is not severely imbalanced  
+- Framing reflects a preventive quality control perspective
 
 ---
 
-## 📈 Key Deliverables
+## 🔍 Exploratory Data Analysis (EDA)
 
-- End-to-end Machine Learning pipeline in Python
-- Interpretable models with clear evaluation metrics
-- Strategic risk segmentation and scenario analysis
-- Visualizations supporting executive decision-making
-- Fully documented and reproducible GitHub repository
-- Final presentation slides
+EDA focused on understanding distributions and relationships between chemical attributes and quality.
 
----
-
-## 📁 Project Structure
-
-- `data/` – Raw and processed datasets  
-- `notebooks/` – EDA, modeling, and risk framework notebooks  
-- `src/` – Reusable preprocessing, modeling, and risk logic modules  
-- `figures/` – Exported visualizations  
-- `slides/` – Final presentation  
+### EDA Enhancements
+- Spearman correlation to capture monotonic, non-linear relationships  
+- Alcohol range analysis:
+  - Wines >12.5% alcohol ≈ 4.5% of dataset  
+  - Clear pattern shift above this threshold  
+- Hypothesis later tested during modeling (not assumed)
 
 ---
 
-## 🎓 Academic Context (Ironhack)
+## 🤖 Modeling Approach
 
-**Project type:**  
-Data Science End-to-End Project (Case Study 1)
+- Supervised binary classification  
+- Interpretable baseline: **Logistic Regression**  
+- Standardized features  
+- `class_weight="balanced"`  
+- **Primary metric:** Recall for the risk class  
+- **Supporting metrics:** ROC-AUC and PR-AUC
 
-### ❓ Research Questions
-- Which chemical attributes are most strongly associated with technical wine quality?
-- How does market perception typically respond to different quality and pricing patterns?
-- Where do misalignments between analytical quality and market perception appear?
-- Which scenarios represent higher long-term perception and pricing risk?
+---
 
-### ⚠️ Main Dataset Challenges
-- Missing values and outliers
-- Subjectivity and bias in expert ratings
-- Market selection bias in wine reviews
-- Absence of direct long-term sales data
+## 🧪 Modeling Experiments
 
-### 🛠️ Mitigation Strategies
-- Robust data cleaning and preprocessing
-- Conservative, interpretable modeling choices
-- Explicit acknowledgment of assumptions and limitations
-- Scenario-based reasoning instead of causal claims
+### Alcohol Filtering Experiment (≤12.5%)
+
+- Controlled experiment with identical pipeline and split  
+- Filtering reduced recall for high-risk wines  
+- Slight ROC-AUC decrease, no meaningful PR-AUC gain  
+
+✅ **Decision:**  
+Alcohol-based filtering rejected to avoid increasing false negatives.  
+Final model uses the **full dataset**.
+
+---
+
+## 📈 Model Evaluation Summary
+
+- **Recall (risk):** ~0.75  
+- **ROC-AUC:** ~0.82  
+- **PR-AUC:** ~0.78  
+
+Emphasis on **threshold-aware evaluation** over accuracy.
+
+---
+
+## ⚠️ Scope and Limitations
+
+- Focus on interpretability and business actionability  
+- No causal claims  
+- Expert quality scores are subjective  
+- External market outcomes are not modeled
+
+---
+
+## 📁 Repository Structure
+
+notebooks/
+├── 01_wine_quality_EDA.ipynb
+├── 02_wine_quality_model.ipynb
+├── 03_risk_framework.ipynb
+├── 04_risk_modeling.ipynb
+├── 05_risk_calculator.ipynb
+
+models/
+config.yaml
+README.md
+
+
+---
+
+## 🎓 Academic Context
+
+**Ironhack – Data Analytics Bootcamp**  
+Case Study 1 – Machine Learning
 
 ---
 
 ## 👩‍💻 Author
 
-**Marta**  
-Ironhack – Data Analytics Bootcamp
-
----
-
-## 🔄 README Update Log
-
-- Project reframed as **Strategic Machine Learning** project  
-- Business problem updated to include **delayed market impact**
-- Methodology updated to **ML + risk segmentation architecture**
-- Deliverables aligned with **Case Study 1 (Data Science)**
-
----
-
-## Step 1 - Data Ingestion Status
-
-- Wine Quality dataset (`WineQT.csv`) loaded as technical quality source
-- Wine Reviews dataset (`winemag-data-130k-v2.csv`) loaded as market perception source
-- Raw data stored in `data/raw/` and treated as immutable
-- Initial sanity checks completed prior to cleaning
-
-## Step 2 — Wine Quality EDA (Technical Quality)
-
-- Confirmed target distribution and class concentration around mid-quality scores
-- Checked missing values and duplicates
-- Screened correlations between physicochemical features and quality to guide modeling
-- Documented initial observations prior to any cleaning or feature engineering
-
-## Step 3 — Wine Reviews Ingestion & Initial Exploration (Market Perception)
-
-- Wine Reviews dataset loaded as market perception source
-- Initial inspection of ratings (`points`), prices, and key categorical variables
-- Missing values identified across price and regional fields
-- Distribution ranges reviewed to assess modeling feasibility
-
-## Step 3B — Wine Reviews EDA & Modeling Decisions (Market Perception)
-
-- Confirmed `points` as a stable and complete target variable for market expectation
-- Explored the relationship between price and ratings to assess signal strength
-- Identified strong skewness and missing values in price distribution
-- Defined two market expectation models: with and without price (log-transformed)
-- Removed highly sparse regional fields (`region_1`, `region_2`) to reduce noise and improve interpretability
-
-## Step 4 — Technical Quality Modeling (Machine Learning)
-
-- Framed technical quality prediction as a supervised regression problem (target: `quality`)
-- Trained baseline Linear and Ridge regression models
-- Evaluated performance using RMSE and R²
-- Identified key chemical drivers of technical wine quality
-- Established an interpretable technical benchmark for strategic comparison
-
-## Step 4B — Model Validation & Advanced ML (Technical Quality)
-
-- Performed cross-validation to assess model stability beyond a single train-test split
-- Compared Linear, Ridge, and Lasso regression to evaluate coefficient stability and feature selection
-- Benchmarked performance with a non-linear Random Forest model
-- Compared linear coefficients vs Random Forest feature importance to validate robustness of key drivers
-- Addressed scaling effects (e.g., `density`) using standardized coefficients for fair comparison
-- Added sensitivity analysis to quantify the impact of key variables (e.g., alcohol) on predicted quality
-
-## Step 5 — Market Expectation Modeling (Machine Learning)
-
-- Framed market perception prediction as a supervised regression problem (target: `points`)
-- Developed two models to estimate expected ratings:
-  - Model 2A: without price
-  - Model 2B: including log-transformed price
-- Quantified the influence of price on perceived quality through performance comparison
-- Established a market expectation benchmark to inform the risk framework
-
-## Step 6 — Risk Score Framework
-
-- Defined business risk as misalignment between technical quality and market expectations
-- Built a continuous Risk Score (0–100) to quantify latent overvaluation risk
-- Refined segmentation into four actionable categories (Low, Medium, Medium–High, High)
-- Created clear visualizations to communicate risk distribution and segment size
-- Translated analytical outputs into proactive strategic guidance to mitigate delayed market impact
-
-## Modeling scope and limitations (Project design choice)
-
-- This project prioritizes interpretability and business actionability over maximum predictive performance
-- Advanced ML techniques are used to validate robustness (cross-validation), benchmark non-linear gains, and test feature stability
-- Complex approaches (e.g., deep learning, extensive NLP) are out of scope due to limited incremental strategic value within the project timeline
-- Results are interpreted as associations and predictive patterns within the datasets, not causal effects
-
+**Marta**
