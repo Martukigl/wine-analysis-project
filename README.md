@@ -211,6 +211,25 @@ This framework is defined **before model optimization** and governs all subseque
 
 ---
 
+## Risk Calculator (Notebook 05)
+
+The final risk calculator implements an **inference-only classification tool** to flag wines with a high risk of low technical quality based exclusively on chemical composition.
+
+Key characteristics:
+
+- Uses the **final Histogram Gradient Boosting model** selected in Notebook 04.
+- Applies a **frozen decision threshold (0.288)** optimized on the validation set to prioritize recall for the high-risk class.
+- No retraining, re-tuning, or test data usage.
+- Validates input schema explicitly and enforces feature order.
+- Outputs:
+  - Risk probability
+  - Binary risk decision (High / Low risk)
+  - Business-friendly interpretation for preventive action
+
+The calculator is designed as an **early warning system** to support conservative, preventive decision-making before market release.
+
+---
+
 ## ⚠️ Scope and Limitations
 
 - Focus on interpretability and business actionability  
