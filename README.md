@@ -229,6 +229,24 @@ Key characteristics:
 The calculator is designed as an **early warning system** to support conservative, preventive decision-making before market release.
 
 ---
+## Demo App — Wine Quality Risk Calculator (Streamlit)
+
+A lightweight Streamlit application was built to demonstrate how the final model can be used as a practical decision-support tool.
+
+Key characteristics:
+- Loads the **final Histogram Gradient Boosting model**.
+- Applies a **frozen decision threshold (0.288)** optimized on the validation set.
+- Inference-only (no retraining, no re-tuning).
+- Accepts chemical composition as input and returns:
+  - Risk probability (risk = low technical quality)
+  - Binary decision (HIGH / LOW RISK)
+  - Business-friendly interpretation
+  - Reference-only observations highlighting unusual input values compared to typical dataset ranges.
+
+Disclaimer:
+This app estimates risk similarity based on patterns observed in the training dataset. It does not imply causality and is intended as a preventive early-warning tool.
+
+---
 
 ## ⚠️ Scope and Limitations
 
