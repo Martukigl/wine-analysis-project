@@ -1,283 +1,221 @@
-# 🍷 Wine Quality Risk Calculator
-
-**Data Science Final Project – Ironhack (Case Study 1)**
+# 🍷 Wine Quality Risk Calculator  
+**Data Science Final Project — Ironhack (Case Study 1)**
 
 ---
 
 ## 🛠️ Tools & Technologies
 
-<p align="left"> 
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python" width="40" height="40"/> 
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg" alt="Pandas" width="40" height="40"/> 
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg" alt="NumPy" width="40" height="40"/> 
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/matplotlib/matplotlib-original.svg" alt="Matplotlib" width="40" height="40"/> 
-  <img src="https://seaborn.pydata.org/_static/logo-wide-lightbg.svg" alt="Seaborn" width="80" height="40"/> 
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/scikitlearn/scikitlearn-original.svg" alt="Scikit-learn" width="40" height="40"/> 
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" alt="Git" width="40" height="40"/> 
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" alt="GitHub" width="40" height="40"/> 
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/jupyter/jupyter-original.svg" alt="Jupyter Notebook" width="40" height="40"/> 
-</p>
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?logo=python&logoColor=white)
+![Seaborn](https://img.shields.io/badge/Seaborn-0C4B5A?logo=python&logoColor=white)
+![Scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)
 
 ---
 
 ## Table of Contents
 
 1. Project Overview  
-2. Data Description  
-3. Exploratory Data Analysis (Notebook 01)  
-4. Baseline Risk Model (Notebook 02)  
-5. Risk Framework & Evaluation Strategy (Notebook 03)  
-6. Risk Modeling & Threshold Optimization (Notebook 04)  
-7. Risk Calculator (Notebook 05)  
-8. Conclusions & Limitations  
+2. Business Problem (Cost Asymmetry)  
+3. Dataset & Risk Definition  
+4. Exploratory Data Analysis (Notebook 01)  
+5. Modeling Strategy & Decision Framework  
+6. Final Model Comparison (Validation)  
+7. Final Model Selection  
+8. Streamlit Demo App  
+9. Limitations & Next Steps  
+10. Repository Structure  
 
 ---
 
 ## 📌 Project Overview
 
-Wine production involves long decision cycles: blending, bottling, pricing, and positioning decisions are often made months or years before a wine reaches the market.
+Wine production involves long decision cycles: blending, bottling, pricing, and positioning decisions are made months (or years) before a wine reaches the market.
 
-When a wine with low technical quality is released under normal or premium positioning, the negative impact is rarely immediate. Instead, consumer trust erodes gradually, making corrective action costly and delayed.
+If a wine with low technical quality is released under normal or premium positioning, the negative impact is rarely immediate. Consumer trust erodes gradually, and corrective action becomes costly and delayed.
 
-This project develops an interpretable **Machine Learning risk classifier** that predicts whether a wine presents a **high risk of low technical quality**, based solely on its chemical composition.
-
-The goal is not to explain quality after the fact, but to provide an **early warning tool** that supports preventive, conservative decision-making before market exposure.
+This project builds a **preventive Machine Learning risk system** that flags wines with **low technical quality risk** using **chemical composition only**.  
+The goal is not to explain quality after the fact, but to provide an **early warning tool** for conservative, preventive decisions before market exposure.
 
 ---
 
-## 🧠 Business Problem
+## 🧠 Business Problem (Cost Asymmetry)
 
-Wineries must decide whether a wine is safe to release and position normally, or whether it requires additional caution (price adjustment, blending revision, or repositioning).
+Wineries must decide whether a wine is safe to release and position normally, or whether it requires caution (price adjustment, blending revision, or repositioning).
 
 From a business perspective, errors are asymmetric:
 
-- **False negatives** (high-risk wines classified as safe)  
-  → Potential long-term brand damage and loss of consumer trust
+- **False Negatives (FN)**: risky wines classified as safe  
+  → highest cost: potential long-term brand damage and trust loss
+- **False Positives (FP)**: safe wines flagged as risky  
+  → conservative cost: additional checks / operational friction
 
-- **False positives** (safe wines flagged as risky)  
-  → Conservative decisions, but limited strategic downside
+**Core business objective:** minimize FNs by detecting risk early, even at the cost of extra FPs.
 
-🎯 **Core business objective:**  
-Minimize false negatives by detecting low-quality risk as early as possible, even at the cost of some false positives.
+This implies a **recall-first decision framework**, where the threshold is treated as a **business policy** (not fixed at 0.5).
 
 ---
 
-## 📊 Dataset Description
+## 📊 Dataset & Risk Definition
 
-### Wine Quality Dataset
-- Physicochemical attributes of wines  
-- Represents technical and analytical wine quality  
-- Features include acidity measures, alcohol content, pH, sugar, sulphates, and density  
+### Dataset
+
+- Physicochemical attributes of wines (chemical composition)
+- Features include acidity measures, alcohol content, pH, sugar, sulphates, density
 - Target variable: expert quality score (integer scale)
 
-### Risk Target Definition
-risk = 1 if quality ≤ 5
-risk = 0 if quality > 5
+### Risk target
 
-- High-risk rate ≈ **45.7%**
-- Dataset is not severely imbalanced  
-- Framing reflects a preventive quality control perspective
+- `risk = 1` if `quality ≤ 5`
+- `risk = 0` otherwise
 
----
-
-## 🔍 Exploratory Data Analysis (EDA)
-
-EDA focused on understanding distributions and relationships between chemical attributes and quality.
-
-### EDA Highlights
-- Strong association between alcohol content and technical quality
-- Volatile acidity consistently aligns with low-quality outcomes
-- Some variables exhibit monotonic but non-linear relationships, motivating the use of both Pearson and Spearman correlation
-- Exploratory patterns motivated a hypothesis-driven experiment evaluated later during modeling, without assuming any decision at the EDA stage
+This framing reflects a **preventive quality control perspective**.
 
 ---
 
-## 🤖 Modeling Approach
+## 🔍 Exploratory Data Analysis (Notebook 01)
 
-- Supervised binary classification  
-- Interpretable baseline: **Logistic Regression**  
-- Non-linear models evaluated for performance comparison  
-- Standardized features where required  
-- Class imbalance handled explicitly  
-- **Primary metric:** Recall for the high-risk class  
-- **Supporting metrics:** ROC-AUC and PR-AUC
+EDA focused on data integrity and feature–target relationships:
 
----
-
-## 📈 Baseline Risk Model (Notebook 02)
-📈 Baseline Model Evaluation Summary
-
-- **High Risk Recall:** ~0.75
-- **High Risk Precision:** ~0.72
-- **ROC-AUC:** ~0.82
-- **PR-AUC:** ~0.78
-
-Evaluation emphasizes recall for the high-risk class, in line with the asymmetric business cost of false negatives.
+- Clean dataset schema (no engineered columns leaked)
+- Min / max + percentile sanity checks
+- Mutual Information analysis (ML-oriented feature dependency)
+- Risk defined explicitly from `quality`
+- No feature elimination
 
 ---
 
-## 🧪 Modeling Experiments
+## 🤖 Modeling Strategy & Decision Framework
 
-### Alcohol-Based Filtering Experiment
+### Models compared (same validation split)
 
-- Hypothesis-driven experiment motivated by exploratory patterns
-- Controlled experiment with identical pipeline and split  
-- Filtering reduced recall for high-risk wines  
-- Slight ROC-AUC decrease, no meaningful PR-AUC gain  
+- Logistic Regression (balanced)
+- Random Forest (balanced)
+- Histogram Gradient Boosting (HistGB)
+- KNN (scaled) as experimental baseline (not final candidate)
 
-✅ **Decision:**  
-Alcohol-based filtering rejected to avoid increasing false negatives.  
-Final model uses the **full dataset**.
+### Threshold tuning policy (recall-first)
 
----
-## Risk Framework & Evaluation Strategy
+- The decision threshold is **not** fixed at 0.5
+- Threshold is tuned on the **validation set only** to enforce a recall target for `risk = 1`
+- Threshold is **frozen** before test and deployment
 
-This project frames low technical wine quality as a **risk prevention problem**, not a pure prediction task.
-
-A wine is labeled as **High Risk** when `quality ≤ 5`, and **Low Risk** otherwise.  
-The model is designed as an **early warning system**, supporting conservative, preventive decisions before market release.
-
-## 🧠 Risk Modeling & Threshold Optimization (Notebook 04)
-
-Multiple classification models were evaluated in parallel under a unified, validation-driven decision framework.
+This ensures comparisons are fair and prevents leakage.
 
 ---
 
-### Model comparison
+## 📈 Final Model Comparison (Validation)
 
-The following models were trained and compared using the same train/validation/test split:
+Validation performance after recall-oriented threshold tuning:
 
-- Logistic Regression (interpretable baseline)
-- Random Forest
-- Histogram Gradient Boosting
+| Model              | FN | FP | Recall (risk=1) | Precision | Accuracy |
+|--------------------|----|----|-----------------|-----------|----------|
+| **HistGB (final)** | **0** | **20** | **0.90** | **0.67** | **0.91** |
+| Random Forest      | 10 | 50 | 0.90 | 0.65 | 0.74 |
+| Logistic Regression| 10 | 63 | 0.90 | 0.60 | 0.68 |
+| KNN (scaled)       | 25 | 33 | 0.76 | 0.71 | 0.75 |
 
-For each model:
-- Training was performed on the training set
-- The decision threshold was selected using the validation set to achieve a **minimum target recall** for high-risk wines
-- Models were compared on validation using recall, precision, ROC-AUC, PR-AUC, and Brier score
+### Why recall values tie
 
----
-
-### Threshold policy
-
-- Thresholds were **not fixed at 0.5**
-- The operating threshold was selected to ensure **high recall for the risk class**, prioritizing the reduction of false negatives
-- Among eligible thresholds, the most conservative option meeting the recall target was chosen
+A recall tie is expected: recall was **intentionally equalized** through threshold tuning to meet the same recall target.  
+Model selection is therefore based on **error composition** (especially FN) and **precision–recall trade-off**, not recall alone.
 
 ---
 
-### Final model selection
+## 🏆 Final Model Selection
 
-The **Histogram Gradient Boosting classifier** achieved the best precision–recall trade-off while meeting the same recall target as the baseline model.
+- **Winner:** Histogram Gradient Boosting (HistGB)
+- **Frozen threshold:** `0.288` (validation-tuned, then frozen)
 
-As a result, it was selected as the **final model** for the project.
+**Reason:**
 
----
-
-### Final evaluation on test set
-
-The final model was evaluated once on a held-out test set using the frozen decision threshold:
-
-- **Recall (risk = 1):** ~0.85  
-- **Precision (risk = 1):** ~0.65  
-- **ROC-AUC:** ~0.83  
-- **PR-AUC:** ~0.81  
-
-These results confirm that the model generalizes well and effectively prioritizes the detection of low-quality wines in line with the preventive business objective.
+- Meets recall target
+- **Zero false negatives** in validation
+- Best precision–recall balance among tied models
+- Minimizes total misclassification errors
 
 ---
 
-### Business cost asymmetry
+## ⭐ Key Visual for Slides (Model Selection)
 
-- **False Negatives** (risky wines classified as safe) are considered more costly than **False Positives**.
-- As a result, the primary objective is to **minimize missed risk cases**, even at the expense of allowing more false alarms.
+The key model selection graphic is:
 
----
+- `figures/model_results_simple_validation.png`
 
-### Evaluation strategy
+What it shows:
 
-- **Recall for the High-Risk class (risk = 1)** is the primary evaluation metric.
-- Accuracy is not optimized, as it treats all errors equally and does not reflect the business objective.
-- **ROC-AUC** and **PR-AUC** are used as supporting metrics to compare models independently of a specific decision threshold.
+- 🟢 Correct predictions (TP + TN)
+- 🔴 Errors (FP + FN)
 
----
-
-### Decision threshold
-
-- The default probability threshold of 0.5 is treated as a convention, not a business rule.
-- Threshold selection is considered part of the decision policy and is tuned in later stages to achieve a minimum target recall for high-risk wines.
-
-This framework is defined **before model optimization** and governs all subsequent modeling, threshold tuning, and risk calculator design.
+HistGB clearly minimizes errors and supports the final choice.
 
 ---
 
-## Risk Calculator (Notebook 05)
+## 💻 Streamlit Demo App
 
-The final risk calculator implements an **inference-only classification tool** to flag wines with a high risk of low technical quality based exclusively on chemical composition.
+Run locally:
 
-Key characteristics:
+- `streamlit run app/app.py`
 
-- Uses the **final Histogram Gradient Boosting model** selected in Notebook 04.
-- Applies a **frozen decision threshold (0.288)** optimized on the validation set to prioritize recall for the high-risk class.
-- No retraining, re-tuning, or test data usage.
-- Validates input schema explicitly and enforces feature order.
+App behavior:
+
+- Loads final HistGB model + frozen threshold
+- Inputs chemical composition features
 - Outputs:
   - Risk probability
-  - Binary risk decision (High / Low risk)
-  - Business-friendly interpretation for preventive action
-
-The calculator is designed as an **early warning system** to support conservative, preventive decision-making before market release.
-
----
-## Demo App — Wine Quality Risk Calculator (Streamlit)
-
-A lightweight Streamlit application was built to demonstrate how the final model can be used as a practical decision-support tool.
-
-Key characteristics:
-- Loads the **final Histogram Gradient Boosting model**.
-- Applies a **frozen decision threshold (0.288)** optimized on the validation set.
-- Inference-only (no retraining, no re-tuning).
-- Accepts chemical composition as input and returns:
-  - Risk probability (risk = low technical quality)
-  - Binary decision (HIGH / LOW RISK)
+  - High / Low Risk classification
   - Business-friendly interpretation
-  - Reference-only observations highlighting unusual input values compared to typical dataset ranges.
 
-Disclaimer:
-This app estimates risk similarity based on patterns observed in the training dataset. It does not imply causality and is intended as a preventive early-warning tool.
+Designed for **live demo** in the presentation.
 
 ---
 
-## ⚠️ Scope and Limitations
+## ⚠️ Limitations & Next Steps
 
-- Focus on interpretability and business actionability  
-- While a non-linear model is used in the final stage, full interpretability is limited compared to linear models  
-- No causal claims  
-- Expert quality scores are subjective  
-- External market outcomes are not modeled
+- Dataset size limits generalization
+- No external validation on unseen wineries
+- Expert quality scores are subjective (no causal claims)
+
+Next steps:
+
+- External data validation
+- Model monitoring after deployment
+- Cost-sensitive threshold policy aligned to real operational cost
 
 ---
 
 ## 📁 Repository Structure
 
-notebooks/
-├── 01_wine_quality_EDA.ipynb
-├── 02_wine_quality_model.ipynb
-├── 03_risk_framework.ipynb
-├── 04_risk_modeling.ipynb
-├── 05_risk_calculator.ipynb
+- `notebooks/`
+  - `01_wine_quality_EDA.ipynb` (final)
+  - `02_wine_quality_model.ipynb` (baseline)
+  - `03_risk_framework.ipynb` (decision framework)
+  - `04_model_comparison.ipynb` (final selection)
+  - `05_risk_calculator.ipynb` (inference-only)
 
-models/
-config.yaml
-README.md
+- `figures/`
+  - `model_results_simple_validation.png` (key slide graph)
+  - `model_comparison_recall_validation.png`
+  - `model_errors_stacked_validation.png` (optional)
 
+- `models/`
+  - `histgb_risk_model.joblib`
+  - `risk_thresholds.joblib`
+
+- `app/`
+  - `app.py`
 
 ---
 
 ## 🎓 Academic Context
 
-**Ironhack – Data Analytics Bootcamp**  
-Case Study 1 – Machine Learning
+**Ironhack — Data Analytics Bootcamp**  
+Case Study 1 — Machine Learning
 
 ---
 
