@@ -21,9 +21,9 @@
 ## Table of Contents
 
 1. Project Overview  
-2. Business Problem (Cost Asymmetry)  
+2. Business Problem 
 3. Dataset & Risk Definition  
-4. Exploratory Data Analysis (Notebook 01)  
+4. Exploratory Data Analysis  
 5. Modeling Strategy & Decision Framework  
 6. Final Model Comparison (Validation)  
 7. Final Model Selection  
@@ -177,6 +177,8 @@ Designed for **live demo** in the presentation.
 
 ## ⚠️ Limitations & Next Steps
 
+Limitations:
+
 - Dataset size limits generalization
 - No external validation on unseen wineries
 - Expert quality scores are subjective (no causal claims)
@@ -221,4 +223,4 @@ Case Study 1 — Machine Learning
 
 ## 👩‍💻 Author
 
-**Marta**
+**Marta García Luceño**
