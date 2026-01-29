@@ -190,27 +190,49 @@ Next steps:
 - Cost-sensitive threshold policy aligned to real operational cost
 
 ---
-
 ## 📁 Repository Structure
+```md
+app/
+- app.py                      # Streamlit risk calculator (inference only)
 
-- `notebooks/`
-  - `01_wine_quality_EDA.ipynb` (final)
-  - `02_wine_quality_model.ipynb` (baseline)
-  - `03_risk_framework.ipynb` (decision framework)
-  - `04_model_comparison.ipynb` (final selection)
-  - `05_risk_calculator.ipynb` (inference-only)
+data/
+- Raw / processed data or links to external sources
 
-- `figures/`
-  - `model_results_simple_validation.png` (key slide graph)
-  - `model_comparison_recall_validation.png`
-  - `model_errors_stacked_validation.png` (optional)
+figures/
+- Intermediate and exploratory figures
 
-- `models/`
-  - `histgb_risk_model.joblib`
-  - `risk_thresholds.joblib`
+reports/figures/
+- Final figures used in EDA, modeling, and slides
 
-- `app/`
-  - `app.py`
+notebooks/
+- 01_wine_quality_EDA.ipynb        # Exploratory Data Analysis
+- 02_wine_quality_model.ipynb      # Baseline model (Logistic Regression)
+- 03_risk_framework.ipynb          # Risk definition & threshold logic
+- 04_model_comparison.ipynb        # Model comparison & final selection
+- 05_risk_calculator.ipynb         # Inference-only risk calculator
+
+models/
+- histgb_risk_model.joblib         # Final trained model
+- risk_thresholds.joblib          # Frozen decision threshold
+
+scalers/
+- Saved preprocessing scalers
+
+slides/
+- Final presentation slides
+
+src/project_template/
+- Reusable utilities and templates
+
+config.yaml
+environment.yml
+pyproject.toml
+uv.lock
+.gitignore
+README.md
+```
+
+
 
 ---
 
